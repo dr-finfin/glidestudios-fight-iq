@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "glidestudios-fight-iq",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-19",
+  "observability": {
+    "enabled": true
+  },
+  "workflows": [
+    {
+      "name": "fight-iq-story-pipeline",
+      "binding": "FIGHT_IQ_STORY_PIPELINE",
+      "class_name": "FightIQStoryPipeline",
+      "schedules": ["0 6 * * *"]
+    }
+  ]
+}
