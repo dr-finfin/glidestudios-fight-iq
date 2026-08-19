@@ -43,7 +43,7 @@ export class FightIQStoryPipeline extends WorkflowEntrypoint<Env, Params> {
         const prompt = `You are the Story Hunter for Fight IQ, a combat-sports storytelling YouTube channel.\n\nGoal: identify one strong video concept.\nChannel: ${params.channel ?? "Fight IQ"}\nPreferred category: ${params.category ?? "any"}\nSeed: ${storySeed}\n\nReturn ONLY valid JSON with these keys:\n{\n  "title": string,\n  "category": "fighter_story" | "rivalry" | "fight_story" | "what_happened",\n  "fighters": string[],\n  "hook": string,\n  "why_now_or_evergreen": string,\n  "story_score": number,\n  "risk_flags": string[]\n}\n\nPrioritize conflict, emotion, curiosity, visual potential, and an explainable narrative. Do not invent factual claims; this is only a concept.`;
 
         const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${encodeURIComponent(this.env.GEMINI_API_KEY)}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${encodeURIComponent(this.env.GEMINI_API_KEY)}`,
           {
             method: "POST",
             headers: { "content-type": "application/json" },
