@@ -1,21 +1,48 @@
 # GlideStudios Architecture
 
-## Control plane
-n8n orchestrates workflows and maintains state transitions.
+## Principle
 
-## Data plane
-Supabase Postgres stores structured state. Cloudflare R2 stores large files and media.
+The user's computer is not a server. Production must continue when the computer is completely offline.
 
-## AI plane
-AI providers generate research summaries, story structures, scripts, scene plans, metadata and QC decisions. Prompts must require source-aware claims and explicit uncertainty.
+## Active runtime
 
-## Compute plane
-Heavy jobs are dispatched to cloud runners. The creator PC is never a required worker.
+```text
+GitHub
+  │
+  └── GitHub Actions
+        │
+        └── Cloudflare Wrangler deploy
+                      │
+                      ▼
+              Cloudflare Worker
+                      │
+                      ▼
+              Cloudflare Workflow
+                │             │
+                ▼             ▼
+             Gemini        Supabase
+                │             │
+                └──────┬──────┘
+                       ▼
+                Production jobs
+                       │
+                       ▼
+              R2 / GitHub Actions
+                       │
+                       ▼
+                    YouTube
+```
 
-## State machine
-`IDEA -> RESEARCH -> FACT_CHECK -> STORY -> SCRIPT -> SCENE_PLAN -> PRODUCTION -> QC -> APPROVAL -> PUBLISHED -> ANALYTICS`
+## Separation of concerns
 
-Failed states return to the smallest appropriate stage instead of restarting the entire episode.
+- Cloudflare Worker: API surface and orchestration.
+- Cloudflare Workflow: durable multi-step execution and retries.
+- Supabase: persistent state and content database.
+- Gemini: AI reasoning/generation.
+- GitHub Actions: deployment and later heavy compute jobs.
+- R2: media storage.
+- YouTube API: publishing and analytics.
 
-## Cost guardrail
-Never allow a provider to silently become billable. Production secrets must be paired with explicit free-tier/rate limits and a fail-closed behavior.
+## Legacy
+
+The `n8n/` directory and original Render setup are retained as an experiment/archive. They are not the production dependency.

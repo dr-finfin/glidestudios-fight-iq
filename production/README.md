@@ -1,8 +1,16 @@
-# Production Worker
+# Production Engine
 
-This will hold the cloud rendering/asset-processing worker code.
+This is the future cloud production area.
 
-Design rule: no workflow may assume the creator computer is available.
+Planned responsibilities:
 
-Input: a production manifest (JSON).
-Output: a render manifest containing storage keys, duration, checksums and QC metadata.
+- scene manifest validation
+- voice/audio processing
+- image/footage preparation
+- captions
+- FFmpeg rendering
+- thumbnail generation
+- upload of final media to R2
+- creation of production job records in Supabase
+
+Heavy processing must run in cloud compute, never depend on the user's computer being online.

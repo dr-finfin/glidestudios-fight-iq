@@ -1,35 +1,61 @@
 # GlideStudios — Fight IQ
 
-Cloud-first, $0-first automated media studio for Fight IQ.
+Fight IQ is the first channel built on the GlideStudios automated media-studio architecture.
 
-## Non-negotiable constraints
-- Target operating cost: $0
-- No credit card required for the core stack
-- No local runtime dependency
-- A powered-off creator PC must not stop production
-- Human approval before publishing in the initial phase
-- Modular components so paid services can be swapped in later
+The channel covers **fighter stories, rivalries, fight stories, comebacks, downfalls and career turning points** in a documentary/explainer style.
 
 ## Current architecture
-- Orchestration: n8n Community Edition, self-hosted in cloud infrastructure
-- Database: Supabase Postgres
-- Object storage: Cloudflare R2
-- AI: Gemini free tier where suitable
-- Heavy compute/rendering: GitHub Actions / public repository standard runners
-- Publishing: YouTube Data API
 
-## MVP pipeline
-1. Story candidate enters `stories`
-2. Research pack is produced and stored
-3. Story is fact-checked
-4. Script is generated
-5. Scene plan is generated
-6. Production job is created
-7. Cloud worker renders/prepares the episode
-8. QC gates the episode
-9. Human approves
-10. Publisher uploads to YouTube
-11. Analytics feeds back into story scoring
+- **Cloudflare Workers + Workflows** — orchestration and durable multi-step jobs
+- **Supabase Postgres** — content state, research metadata, production state and analytics
+- **Gemini API** — story ideation and structured AI generation
+- **Cloudflare R2** — media/object storage (later production phase)
+- **GitHub Actions** — cloud deployment and later heavy production jobs
+- **YouTube API** — publishing (later production phase)
 
-## Important note
-Free tiers have limits and can change. This repository deliberately keeps provider-specific logic behind small interfaces so services can be replaced.
+Your computer is **not part of runtime**. It is only an optional control/administration device.
+
+## Repository map
+
+```text
+.
+├── .github/workflows/       GitHub automation
+├── certs/                   Certificate documentation/placeholders only
+├── database/                Supabase schema + seed data
+├── docs/                    Architecture, pipeline, security, setup
+├── n8n/                     Legacy/experimental n8n deployment artifacts
+├── production/              Future cloud rendering/asset pipeline
+├── src/                     Active Cloudflare Worker + Workflow code
+├── .gitignore
+├── package.json
+├── tsconfig.json
+└── wrangler.jsonc
+```
+
+## First milestone
+
+The first production milestone is intentionally small:
+
+```text
+Scheduled/HTTP trigger
+        ↓
+Fight IQ Story Hunter
+        ↓
+Gemini structured story concept
+        ↓
+Supabase `stories`
+```
+
+After that is stable we add research, fact checking, scripts, scene plans, production, packaging, publishing and analytics.
+
+## Secrets
+
+Never commit API keys, passwords, service-role keys, `.env` files or private certificates.
+
+Required Cloudflare Worker secrets are declared in `wrangler.jsonc` and are supplied through GitHub Actions/Cloudflare Secrets.
+
+## Local development
+
+Local development is optional. Production deployment is intended to happen from GitHub Actions so the system does not depend on your computer.
+
+See `docs/CLOUDFLARE_SETUP.md`.

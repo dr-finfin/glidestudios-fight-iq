@@ -1,0 +1,29 @@
+node_modules/
+dist/
+.wrangler/
+.dev.vars*
+.env*
+*.log
+.DS_Store
+Thumbs.db
+
+# Local/editor files
+.vscode/
+.idea/
+
+# Generated build/media output
+production/output/
+production/tmp/
+*.mp4
+*.mov
+*.mkv
+*.wav
+*.mp3
+
+# Credentials / keys
+*.pem
+*.key
+secrets.json
+
+# Do not ignore the CA certificate if intentionally versioned; it is a public trust certificate.
+# Private credentials must never be committed.

@@ -1,15 +1,7 @@
-# n8n Workflows
+# Legacy n8n Experiment
 
-This directory will contain exported n8n workflow JSON only after each workflow is tested.
+This directory is retained as an archive of the original cloud-hosted n8n approach.
 
-Naming convention:
-- 01_story_discovery.json
-- 02_story_research.json
-- 03_story_factcheck.json
-- 04_script_generation.json
-- 05_scene_planning.json
-- 06_production_dispatch.json
-- 07_qc.json
-- 08_approval.json
-- 09_youtube_publish.json
-- 10_analytics_learning.json
+It is **not required** for the active GlideStudios runtime.
+
+The Render experiment proved that the free 512 MB Render instance was not a suitable long-running n8n foundation for this project. The production architecture therefore moved to Cloudflare Workers + Workflows.
