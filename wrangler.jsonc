@@ -18,7 +18,9 @@
       "name": "fight-iq-story-pipeline",
       "binding": "FIGHT_IQ_STORY_PIPELINE",
       "class_name": "FightIQStoryPipeline",
-      "schedules": ["0 6 * * *"]
+      "schedules": [
+        "0 6 * * *"
+      ]
     }
   ]
 }
